@@ -1,7 +1,6 @@
 ---
 name: write-pr
 description: Write a structured PR description (10-section template) from the current branch's commits and diff, then create or update the PR via gh. PR body defaults to English.
-disable-model-invocation: true
 allowed-tools: >-
   Read, Write,
   Bash(git log:*), Bash(git diff:*), Bash(git status:*), Bash(git branch:*),
