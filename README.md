@@ -1,5 +1,7 @@
 # intent-driven-pr
 
+[English](README.md) | [한국어](README.ko.md)
+
 Write **intent-driven, decision-document PR descriptions** — a structured 10-section PR body generated from your branch's commits and diff, then create or update the PR via `gh`. Works as a shared skill across **Claude Code, Cursor, and Codex CLI**.
 
 ## Why
@@ -22,9 +24,9 @@ No Python or other runtime is required — the skill drives `git` and `gh` direc
 
 ## Install
 
-Pick your agent and run one of the commands below. The same skill files (`skills/write-pr/`) are placed into each agent's skill location — the implementation is agent-agnostic.
+Replace `<AGENT>` in either install command below with your agent's value from the table. The skill files (`skills/write-pr/`) are installed for the selected agent.
 
-| Tool | `--agent` value | How to invoke |
+| Tool | `--agent` value | Direct invocation after skill installation |
 |------|-----------------|----------------|
 | Claude Code | `claude-code` | `/write-pr [base branch and/or PR#]` |
 | Cursor 2.4+ | `cursor` | `/write-pr` |
@@ -46,23 +48,26 @@ npx skills add younginshin115/intent-driven-pr --agent <AGENT> --global
 
 ```text
 /plugin marketplace add younginshin115/intent-driven-pr
+/plugin install intent-driven-pr@intent-driven-pr
 ```
 
-Then invoke the namespaced command: `/intent-driven-pr:write-pr 123`.
+After plugin installation, you can invoke the skill directly with `/intent-driven-pr:write-pr 123`.
 
 ## Usage
 
-Run the command on the branch you want to open or update a PR for:
+On the branch you want to open or update a PR for, ask your agent in natural language:
 
 ```text
-/write-pr                 # PR against the repo default (or develop, if present)
-/write-pr develop         # target a specific base branch
-/write-pr 123             # update the body of an existing PR #123
+Use write-pr to create a PR for this branch.
+Create a PR targeting develop using write-pr.
+Update the body of PR #123 using write-pr.
 ```
+
+The agent can select the skill automatically based on your request. To invoke it directly, use the examples above for your tool and installation method.
 
 The skill gathers context (`git log`, `git diff`, and any open PR), judges the size of the change, writes the body in the 10-section template, and creates or updates the PR.
 
-**Language:** the PR body defaults to English. Ask in another language to override — e.g. "한국어로 PR 본문 써줘".
+**Language:** section headers and prose use Korean when your conversation language is Korean, and English otherwise. An explicit output-language request takes precedence.
 
 ## What it produces
 
@@ -83,7 +88,7 @@ A PR body using these sections (sections that don't apply are omitted):
 
 The 10-section PR template in this skill is adapted from the PR template in "PR을 더 느리게 만들기 위한 고민" (KakaoPay Tech Blog, 2026): https://tech.kakaopay.com/post/kakaopayins-slow-pr-fast-dev/
 
-The original proposes an 8-section "decision document" PR template. This skill translates it to English, adds two sections (Verification / Test results, Follow-ups & required actions), and packages it as a multi-agent skill with gh automation. The underlying philosophy ("slow PRs make for fast development") is credited as inspiration; the implementation is my own.
+The original proposes an 8-section "decision document" PR template. This skill provides English and Korean templates, adds two sections (Verification / Test results, Follow-ups & required actions), and packages it as a multi-agent skill with gh automation. The underlying philosophy ("slow PRs make for fast development") is credited as inspiration; the implementation is my own.
 
 ## License
 
