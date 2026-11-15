@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "intent-driven-pr",
-  "description": "Write a structured, intent-driven PR description (10-section template) from your branch's commits and diff, then create or update the PR via gh.",
-  "version": "1.0.0",
+  "description": "Write a concise, intent-driven PR description (five core sections, plus optional ones only when needed) from your branch's commits and diff, then create or update the PR via gh.",
+  "version": "1.1.0",
   "author": { "name": "Youngin Shin", "email": "yishin@cochlear.ai" },
   "repository": "https://github.com/younginshin115/intent-driven-pr",
   "license": "MIT",
