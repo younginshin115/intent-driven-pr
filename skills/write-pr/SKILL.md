@@ -1,6 +1,6 @@
 ---
 name: write-pr
-description: Write a structured PR description (10-section template) from the current branch's commits and diff, then create or update the PR via gh. PR body defaults to English.
+description: Write a structured PR description (10-section template) from the current branch's commits and diff, then create or update the PR via gh.
 allowed-tools: >-
   Read, Write,
   Bash(git log:*), Bash(git diff:*), Bash(git status:*), Bash(git branch:*),
@@ -28,16 +28,19 @@ Generate a PR body in the team's 10-section template, then create or update the 
    - If an existing PR is open for this branch, read it first: `gh pr view --json number,title,body`.
 
 3. **Judge the size.** Not every section applies to every PR. **Omit** a section entirely when it doesn't apply — don't emit a header with "N/A" under it. Never invent content to fill a section.
-   - **Always include**: "What problem does this solve?", "How was it solved?", "Review points", "Verification / Test results" (even just "build passes"). These form the minimum skeleton of every PR.
+   - **Always include**: "What problem does this solve?", "How was it solved?", "Review points", "Verification / Test results" (even just "build passes", if actually verified), using the corresponding headers in the selected language. These form the minimum skeleton of every PR.
    - **Include when applicable**: the rest. "Limitations & tradeoffs", "Edge cases & failure scenarios", "Alternatives considered & why this choice", and "Follow-ups & required actions" are usually omitted on a small PR and essential on a substantial one — include them when they're real, don't skip them just because they take effort.
    - **Trivial** (typo, one-line, rename, copy tweak): keep it short; usually just the always-include sections.
    - **Substantial** (new feature, schema change, multiple decisions, cross-cutting): the "when applicable" sections usually have real content — especially Alternatives considered, Verification, and Follow-ups. Make sure you didn't omit a section that genuinely applies.
 
 4. **Choose the body language.**
-   - Write the PR body in **English by default**.
-   - If the user asks for another language, write the whole body — section headers and prose — in that language. Do not hardcode any single language.
+   - Follow any explicit request for the PR's output language.
+   - Otherwise, use **Korean** if the user's preferred conversation language (or, if unstated, their latest substantive message) is Korean; use **English** in all other cases, including when language context is unavailable.
+   - Use the same language for section headers and prose; preserve code identifiers, paths, commands, and URLs.
 
-5. **Write the body** using exactly these section headers, in this order:
+5. **Write the body** using the selected language's section headers below, in this order. Translate the headers for other explicitly requested languages.
+
+   **English:**
 
 ```
 # What problem does this solve?
@@ -52,7 +55,22 @@ Generate a PR body in the team's 10-section template, then create or update the 
 # Follow-ups & required actions
 ```
 
-   Guidance per section:
+   **Korean:**
+
+```
+# 어떤 문제를 해결하나요?
+# 왜 필요한가요?
+# 어떻게 해결했나요?
+# 기존 동작에 미치는 영향
+# 엣지 케이스 및 실패 시나리오
+# 한계 및 트레이드오프
+# 검토한 대안과 선택 이유
+# 검증 및 테스트 결과
+# 리뷰 포인트 (파일/영역별 위험도 🔴🟡🟢)
+# 후속 작업 및 필수 조치
+```
+
+   Guidance per section (applies to the corresponding section in every language):
    - **What problem does this solve? / Why does it need to be done?**: the concrete problem and motivation, not a feature restatement.
    - **How was it solved?**: layered bullet summary (domain / DB / API / FE, etc.), reference real paths/functions.
    - **Impact on existing behavior**: backward compatibility, default behavior, migrations, auto-trigger paths.
