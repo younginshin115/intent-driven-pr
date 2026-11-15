@@ -90,11 +90,11 @@ The reader is the reviewer. Every line should help them review; anything they ca
    - **What problem does this solve? / What does this add?**: one or two sentences. For a fix, the concrete problem; for an addition or setup, what now exists that didn't before.
    - **Why does it need to be done?**: the motivation, only where the first section leaves it open.
    - **How was it solved? / How is it set up?**: the approach and the key decisions, in a few bullets. Not a file-by-file walkthrough of the diff.
-   - **Impact on existing behavior**: what changes for existing users or callers — compatibility, defaults, migrations. One to three lines, or one line saying there is none and why.
+   - **Impact on existing behavior**: what changes for existing users or callers — compatibility, defaults, migrations. One line per change, or one line saying there is none and why.
    - **Edge cases & failure scenarios**: the non-obvious failure paths and how they are handled.
    - **Limitations & tradeoffs**: what this PR intentionally does NOT do, known debt.
    - **Alternatives considered & why this choice**: the real forks you weighed and why you chose what you did.
-   - **Verification / Test results**: what was actually run and what it showed, in a line or two. If nothing was verified, say so in one line; never claim verification that wasn't done.
+   - **Verification / Test results**: what was actually run and what it showed, one line per check. If nothing was verified, say so in one line; never claim verification that wasn't done.
    - **Review points**: list the 🔴 (high risk) and 🟡 (review carefully) files/areas individually, each with a one-line why. Fold 🟢 (low risk) into a single line, or leave it out. Don't list every changed file.
    - **Follow-ups & required actions**: actions required outside this diff before/after merge — manual DB migrations (give the exact command), migration-before-deploy ordering (⚠️), config/env changes, and follow-up work in other repos. Deploy steps live here.
 
@@ -106,8 +106,9 @@ The reader is the reviewer. Every line should help them review; anything they ca
    - Optionally end the body with a trailer line: `🤖 Generated with [Claude Code](https://claude.com/claude-code)` — omit it if the repo/org disables AI attribution or the user prefers none.
 
 ## Notes
-- Keep it short. Aim for one to four bullets per section, one line per bullet. A trivial PR's whole body can be a handful of lines.
-- Don't restate what the diff already shows. Write what the reviewer can't get from reading the code: intent, decisions, risk, evidence.
-- A longer body is fine when the change needs it; a longer body that repeats itself or fills sections for completeness is not.
+- Length follows the change, not a quota. A trivial PR's whole body can be a handful of lines; a large PR may need many bullets in a section.
+- Cut by kind, not by count. Leave out what the diff already shows, anything said twice, and sections that fail their test. Write what the reviewer can't get from reading the code: intent, decisions, risk, evidence.
+- Never drop or merge real items to stay short: every behavior change, every 🔴/🟡 review area, every required action, and every verification that was run gets its own line.
+- The first section and the "how" section stay a summary even on a large PR; the detail belongs in the sections after them.
 - Use repo-relative file links/paths so they're clickable.
 - Don't invent problems, risks, alternatives, or test results — only list ones that are real for this diff.
