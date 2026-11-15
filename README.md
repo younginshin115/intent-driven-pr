@@ -2,7 +2,7 @@
 
 [English](README.md) | [한국어](README.ko.md)
 
-Write **intent-driven, decision-document PR descriptions** — a structured 10-section PR body generated from your branch's commits and diff, then create or update the PR via `gh`. Works as a shared skill across **Claude Code, Cursor, and Codex CLI**.
+Write **intent-driven, decision-document PR descriptions** — a concise PR body generated from your branch's commits and diff, with five core sections plus optional ones only when the reviewer needs them — then create or update the PR via `gh`. Works as a shared skill across **Claude Code, Cursor, and Codex CLI**.
 
 ## Why
 
@@ -65,30 +65,34 @@ Update the body of PR #123 using write-pr.
 
 The agent can select the skill automatically based on your request. To invoke it directly, use the examples above for your tool and installation method.
 
-The skill gathers context (`git log`, `git diff`, and any open PR), judges the size of the change, writes the body in the 10-section template, and creates or updates the PR.
+The skill gathers context (`git log`, `git diff`, and any open PR), decides the PR type and which sections the reviewer needs, writes the body, and creates or updates the PR.
 
 **Language:** section headers and prose use Korean when your conversation language is Korean, and English otherwise. An explicit output-language request takes precedence.
 
 ## What it produces
 
-A PR body using these sections (sections that don't apply are omitted):
+A short PR body written for the reviewer. Five sections are always included; the other five appear only when they carry something the reviewer needs.
 
-1. What problem does this solve?
-2. Why does it need to be done?
-3. How was it solved?
-4. Impact on existing behavior
-5. Edge cases & failure scenarios
-6. Limitations & tradeoffs
-7. Alternatives considered & why this choice
-8. Verification / Test results
-9. Review points (Risk 🔴🟡🟢 by file/area)
-10. Follow-ups & required actions
+| # | Section | Included |
+|---|---------|----------|
+| 1 | What problem does this solve? / What does this add? | Always |
+| 2 | Why does it need to be done? | When needed |
+| 3 | How was it solved? / How is it set up? | Always |
+| 4 | Impact on existing behavior | Always |
+| 5 | Edge cases & failure scenarios | When needed |
+| 6 | Limitations & tradeoffs | When needed |
+| 7 | Alternatives considered & why this choice | When needed |
+| 8 | Verification / Test results | Always |
+| 9 | Review points (Risk 🔴🟡🟢 by file/area) | Always |
+| 10 | Follow-ups & required actions | When needed |
+
+**Headers follow the PR type.** Sections 1 and 3 use the *problem* headers for a fix or improvement, and the *addition* headers ("What does this add?" / "How is it set up?") for initial setup, new features, plugin or dependency installs, configuration, and docs — so a setup PR doesn't have to invent a problem.
 
 ## Credits
 
-The 10-section PR template in this skill is adapted from the PR template in "PR을 더 느리게 만들기 위한 고민" (KakaoPay Tech Blog, 2026): https://tech.kakaopay.com/post/kakaopayins-slow-pr-fast-dev/
+The PR template in this skill is adapted from the PR template in "PR을 더 느리게 만들기 위한 고민" (KakaoPay Tech Blog, 2026): https://tech.kakaopay.com/post/kakaopayins-slow-pr-fast-dev/
 
-The original proposes an 8-section "decision document" PR template. This skill provides English and Korean templates, adds two sections (Verification / Test results, Follow-ups & required actions), and packages it as a multi-agent skill with gh automation. The underlying philosophy ("slow PRs make for fast development") is credited as inspiration; the implementation is my own.
+The original proposes an 8-section "decision document" PR template. This skill provides English and Korean templates, adds two sections (Verification / Test results, Follow-ups & required actions), switches the headers by PR type, leaves optional sections out by default, and packages it as a multi-agent skill with gh automation. The underlying philosophy ("slow PRs make for fast development") is credited as inspiration; the implementation is my own.
 
 ## License
 
